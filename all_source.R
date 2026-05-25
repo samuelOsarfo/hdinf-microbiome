@@ -10,9 +10,9 @@
 #   sig_u      - measurement error SD for observed log-ratios (default 1)
 #   sig_eps    - residual SD for the outcome y (default 1)
 #   sig_factor - SD of idiosyncratic noise in the factor model for true_lr (default 1)
-#   alpha0     - true coefficient vector for log-ratios in the outcome model;
+#   alpha0     - true coefficient vector for log-ratios in the log-contrast model;
 #                if NULL, generated with nz_alp non-zero entries ~ N(0,1)
-#   beta0      - true coefficient vector for confounders in the outcome model;
+#   beta0      - true coefficient vector for confounders in the log-contrast model;
 #                if NULL, generated as rnorm(q)
 #   nz_alp     - number of non-zero entries in alpha0 when auto-generated (default 3)
 #   reps       - number of replicate measurements of obs_lr for SIMEX/RC (default 3)
