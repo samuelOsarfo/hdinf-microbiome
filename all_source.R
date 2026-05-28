@@ -10,9 +10,9 @@
 #   sig_u      - measurement error SD for observed log-ratios (default 1)
 #   sig_eps    - residual SD for the outcome y (default 1)
 #   sig_factor - SD of idiosyncratic noise in the factor model for true_lr (default 1)
-#   alpha0     - true coefficient vector for log-ratios in the log-contrast model;
+#   alpha0     - true coefficient vector for log-ratios in the outcome model;
 #                if NULL, generated with nz_alp non-zero entries ~ N(0,1)
-#   beta0      - true coefficient vector for confounders in the log-contrast model;
+#   beta0      - true coefficient vector for confounders in the outcome model;
 #                if NULL, generated as rnorm(q)
 #   nz_alp     - number of non-zero entries in alpha0 when auto-generated (default 3)
 #   reps       - number of replicate measurements of obs_lr for SIMEX/RC (default 3)
@@ -560,12 +560,12 @@ sim_fn <- function(n, p, q, alpha0, beta0, sig_u = 1, sig_eps = 1, sig_factor = 
   )
   
   
-  y <- dd$y ; MV <- dd$MV_mat
+  y <- dd$y ; MV <- dd$MV_mat; obs_lr <-dd$obs_lr;
   
   
   
   #ddl
-  ddlasso.obj <-dd_lasso(X=MV, Y=y, index=c(1:10), rho=0.5, rhop=0.5)
+  ddlasso.obj <-dd_lasso(X=obs_lr, Y=y, index=c(1:10), rho=0.5, rhop=0.5)
   ci.obj<-ci.dd_lasso(ddlasso.obj)
   colnames(ci.obj)<-c('index', 'lower_ci', 'upper_ci','p_value')
   covered <- (alpha0[1:10] >= ci.obj$lower_ci) & (alpha0[1:10] <= ci.obj$upper_ci)
